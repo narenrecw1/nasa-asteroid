@@ -7,6 +7,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * Helper function to parse the JSON response given by the NeoWS API into a list of our [Asteroid]
+ * objects
+ *
+ * @param jsonResult The JSON response that came from the API.
+ * @return A [List] of [Asteroid]s
+ */
 fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
     val nearEarthObjectsJson = jsonResult.getJSONObject("near_earth_objects")
 

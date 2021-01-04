@@ -7,5 +7,6 @@ import com.squareup.moshi.Json
 data class PictureOfDay(
     @PrimaryKey
     val id:Int = 0,
-    @Json(name = "media_type") val mediaType: String, val title: String,
-                        val url: String)
+    @Json(name = "media_type") val mediaType: String,
+    val title: String,
+    val url: String)

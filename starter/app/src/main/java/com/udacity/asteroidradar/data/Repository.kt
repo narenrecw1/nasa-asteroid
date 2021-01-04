@@ -1,12 +1,10 @@
 package com.udacity.asteroidradar.data
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
-import com.udacity.asteroidradar.Constants
+import com.udacity.asteroidradar.*
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
-import com.udacity.asteroidradar.formattedForNeoWS
-import com.udacity.asteroidradar.getDateAfterNumDays
-import com.udacity.asteroidradar.getToday
 import com.udacity.asteroidradar.network.Backend
 import com.udacity.asteroidradar.persistence.AsteroidDatabase
 import com.udacity.asteroidradar.persistence.getAsteroidsForCurrentWeek
@@ -24,6 +22,8 @@ import java.util.*
 /**
  * Repository access the planetary and NeoWS asteroid data
  *
+ * @param context the context used to get the db instance
+ *
  * @author Narendra Darla
  */
 class Repository(context: Context) {
@@ -36,8 +36,8 @@ class Repository(context: Context) {
     val asteroidsToday : LiveData<List<Asteroid>>
         get() = database.asteroidDao().getAsteroidsForToday()
 
-    val pictureOfDay :LiveData<PictureOfDay>
-    get() = database.pictureOfDayDao().get()
+    val pictureOfDay :LiveData<PictureOfDay?>
+            get() = database.pictureOfDayDao().get()
 
     suspend fun refreshData() = withContext(Dispatchers.IO){
         listOf(
@@ -49,12 +49,10 @@ class Repository(context: Context) {
 
     private suspend fun refreshPictureOfDayData() {
        try{
-          val response = Backend.neoWS.feed(getToday().formattedForNeoWS, getDateAfterNumDays(Constants.DEFAULT_END_DATE_DAYS).formattedForNeoWS)
+          val response = Backend.planetary.pictureOfTheDay(getToday().formatForPlanetaryAPI, false)
            if(!response.isSuccessful)
                return
-           val body = JSONObject(response.body()!!)
-           val parsed = parseAsteroidsJsonResult(body)
-           parsed.forEach(database.asteroidDao()::insertAsteroid)
+          database.pictureOfDayDao().save(response.body()!!)
        }catch (e:Exception){
            e.printStackTrace()
        }
@@ -68,6 +66,7 @@ class Repository(context: Context) {
                 return
             }
            val body = JSONObject(response.body()!!)
+           Log.v("refreshAsteroidData","refreshAsteroidData"+body.toString())
            val parsed = parseAsteroidsJsonResult(body)
            parsed.forEach(database.asteroidDao()::insertAsteroid)
        }catch (e:Exception){

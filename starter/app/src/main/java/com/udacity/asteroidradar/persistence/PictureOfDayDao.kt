@@ -9,9 +9,9 @@ import com.udacity.asteroidradar.data.PictureOfDay
 
 @Dao
 interface PictureOfDayDao {
-
+//Verified
     @Query("SELECT * FROM picture_of_the_day WHERE id = 0")
-    fun get() : LiveData<PictureOfDay>
+    fun get() : LiveData<PictureOfDay?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun save(pictureOfDay: PictureOfDay)
