@@ -12,7 +12,7 @@ import com.udacity.asteroidradar.data.Repository
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
-    
+
     private val viewModel :MainViewModel by viewModels(factoryProducer = ::viewModelFactory)
 
     private val viewModelFactory by lazy{
@@ -30,9 +30,7 @@ class MainFragment : Fragment() {
             viewModel = this@MainFragment.viewModel
             asteroidRecycler.adapter = asteroidAdapter
         }
-//        binding.lifecycleOwner = this
-//
-//        binding.viewModel = viewModel
+
         viewModel.asteroids.observe(viewLifecycleOwner, asteroidAdapter::items::set)
 
         setHasOptionsMenu(true)
@@ -50,9 +48,10 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId){
-//            R.id.filer
-//        }
+        when(item.itemId){
+            R.id.filter_show_day -> {viewModel.setAsteroidFilter(AsteroidFilter.CURRENT_WEEK)}
+            R.id.filter_show_week ->{viewModel.setAsteroidFilter(AsteroidFilter.ONLY_DAY)}
+        }
         return true
     }
 }

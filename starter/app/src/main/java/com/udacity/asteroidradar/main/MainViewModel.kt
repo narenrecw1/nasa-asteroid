@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -19,12 +20,16 @@ class MainViewModel (repository:Repository,
         private val asteroidFilter = MutableLiveData(AsteroidFilter.CURRENT_WEEK)
         val asteroids = Transformations.switchMap(asteroidFilter){
             when(it!!){
-                AsteroidFilter.CURRENT_WEEK -> repository.asteroidsThisWeek
+                AsteroidFilter.CURRENT_WEEK -> {
+                    println("MainViewModel"+repository.asteroidsThisWeek.value?.size)
+                    repository.asteroidsThisWeek
+                }
                 AsteroidFilter.ONLY_DAY -> repository.asteroidsToday
             }
         }
         val imageOfTheDayUrl = Transformations.map(repository.pictureOfDay){
-            it?.url
+            //it?.url
+            "https://res.cloudinary.com/demo/image/upload/l_cloudinary_icon_white,w_300,g_north_east,o_60/w_500/sample.jpg"
         }
 
         fun setAsteroidFilter(filter:AsteroidFilter){
