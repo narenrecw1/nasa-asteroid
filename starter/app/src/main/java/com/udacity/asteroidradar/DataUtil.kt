@@ -3,8 +3,14 @@ package com.udacity.asteroidradar
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ *
+ * @author Narendra Darla(R)
+ */
 private val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.ROOT)
+
 private val defaultTimeZone = TimeZone.getDefault()
+
 private val nasaTimeZone = TimeZone.getTimeZone("US/Eastern")
 
 fun getToday():Date = Calendar.getInstance().time
@@ -15,7 +21,7 @@ fun getDateAfterNumDays(days:Int):Date = with(Calendar.getInstance()){
 }
 
 val Date.formattedForNeoWS :String
-    get() = dateFormat.apply { timeZone = nasaTimeZone}.format(this)
+    get() = dateFormat.apply { timeZone = defaultTimeZone}.format(this)
 
 val Date.formatForPlanetaryAPI :String
     get() = dateFormat.apply{ timeZone = nasaTimeZone}.format(this)

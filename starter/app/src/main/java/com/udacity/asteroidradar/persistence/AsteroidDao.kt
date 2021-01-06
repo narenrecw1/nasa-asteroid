@@ -14,26 +14,19 @@ import com.udacity.asteroidradar.getToday
 /**
  * Data Access Object interface to access the Asteroid Data from the Room Data Base
  *
- * @author Narendra Darla
+ * @author Narendra Darla(R)
  */
 
 @Dao
 interface Asteroidao{
 
-
-    //1.Get Asteroids
-    //2.Get Asteroids by start and end date
-    //3.Clear Asteroids before
-    //4.Insert New
-
     @Query(
         """
-        SELECT * FROM asteroids 
-            WHERE Date(:startDate) <= Date(closeApproachDate) 
-                AND Date(:endDate) >= Date(closeApproachDate) 
+            SELECT * FROM asteroids
+                WHERE Date(:startDate) <= Date(closeApproachDate)
+                  AND Date(:endDate) >= Date(closeApproachDate)
                 ORDER BY Date(closeApproachDate)
-
-               """
+        """
     )
     fun getAsteroids(startDate:String, endDate:String): LiveData<List<Asteroid>>
 
@@ -57,7 +50,8 @@ interface Asteroidao{
 
 
 }
-fun Asteroidao.getAsteroidsForCurrentWeek() = getAsteroids(getToday().formattedForNeoWS,
+fun Asteroidao.getAsteroidsForCurrentWeek() = getAsteroids(
+    getToday().formattedForNeoWS,
     getDateAfterNumDays(Constants.DEFAULT_END_DATE_DAYS).formattedForNeoWS)
 
 fun Asteroidao.getAsteroidsForToday(): LiveData<List<Asteroid>>{

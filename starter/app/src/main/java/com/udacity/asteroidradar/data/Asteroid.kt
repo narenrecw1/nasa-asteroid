@@ -5,6 +5,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
+/**
+ *
+ * @author Narendra Darla(R)
+ */
 @Parcelize
 @Entity(tableName = "asteroids")
 data class Asteroid(

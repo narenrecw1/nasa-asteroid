@@ -61,13 +61,15 @@ class Repository(context: Context) {
 
     private suspend fun refreshAsteroidData() {
        try{
-            val response = Backend.neoWS.feed(getToday().formattedForNeoWS, getDateAfterNumDays(Constants.DEFAULT_END_DATE_DAYS).formattedForNeoWS)
+            val response = Backend.neoWS.feed(getToday().formattedForNeoWS,
+                getDateAfterNumDays(Constants.DEFAULT_END_DATE_DAYS).formattedForNeoWS)
             if(!response.isSuccessful){
                 return
             }
            val body = JSONObject(response.body()!!)
            Log.v("refreshAsteroidData","refreshAsteroidData"+body.toString())
            val parsed = parseAsteroidsJsonResult(body)
+           Log.v("refreshAsteroidData","refreshAsteroidData"+parsed.size)
            parsed.forEach(database.asteroidDao()::insertAsteroid)
        }catch (e:Exception){
            e.printStackTrace()

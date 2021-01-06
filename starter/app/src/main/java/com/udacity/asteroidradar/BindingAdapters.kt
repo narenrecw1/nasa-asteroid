@@ -5,6 +5,10 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 
+/**
+ *
+ *
+ */
 
 @BindingAdapter("remoteUrl")
 fun bindAsteroidPictureOfTheDay(imageView: ImageView, imageUrl: String?) {
@@ -17,20 +21,20 @@ fun bindAsteroidPictureOfTheDay(imageView: ImageView, imageUrl: String?) {
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
-    if (isHazardous) {
-        imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
+    imageView.setImageResource(if (isHazardous) {
+        R.drawable.ic_status_potentially_hazardous
     } else {
-        imageView.setImageResource(R.drawable.ic_status_normal)
-    }
+        R.drawable.ic_status_normal
+    })
 }
 
 @BindingAdapter("asteroidStatusImage")
 fun bindDetailsStatusImage(imageView: ImageView, isHazardous: Boolean) {
-    if (isHazardous) {
-        imageView.setImageResource(R.drawable.asteroid_hazardous)
+    imageView.setImageResource(if (isHazardous) {
+        R.drawable.asteroid_hazardous
     } else {
-        imageView.setImageResource(R.drawable.asteroid_safe)
-    }
+        R.drawable.asteroid_safe
+    })
 }
 
 @BindingAdapter("astronomicalUnitText")

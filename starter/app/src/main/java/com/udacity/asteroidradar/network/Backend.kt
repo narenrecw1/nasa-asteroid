@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 /**
  * An Object holding the singleton instances of APIs used.
  *
- * @author Narendra Darla
+ * @author Narendra Darla(R)
  */
 object Backend {
 
@@ -29,8 +29,10 @@ object Backend {
     val planetary :Planetary by lazy{ retrofit.create(Planetary::class.java)}
 
 
-    val loggingLevel = if(BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
     private val retrofit by lazy{
+
+        val loggingLevel = if(BuildConfig.DEBUG) HttpLoggingInterceptor
+            .Level.BODY else HttpLoggingInterceptor.Level.NONE
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply { level = loggingLevel })
             .connectTimeout(10, TimeUnit.SECONDS)
@@ -38,8 +40,11 @@ object Backend {
             .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(NasaAuthInterceptor()).build()
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-        Retrofit.Builder().client(okHttpClient)
-            .baseUrl(Constants.BASE_URL).addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
+        Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
     }
 }

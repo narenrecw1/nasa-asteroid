@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.data.Asteroid
 import com.udacity.asteroidradar.databinding.LayoutAsteroidItemBinding
 
+/**
+ *
+ * @author Narendra Darla(R)
+ */
 class AsteroidViewHolder(val binding: LayoutAsteroidItemBinding): RecyclerView.ViewHolder(binding.root) {
     companion object{
         fun create(parent: ViewGroup):AsteroidViewHolder{
@@ -15,6 +19,7 @@ class AsteroidViewHolder(val binding: LayoutAsteroidItemBinding): RecyclerView.V
         }
     }
     fun bind(asteroid: Asteroid, itemClickHandler: ItemClickHandler) {
+        println("Asteroid ${asteroid.id}")
         binding.asteroid = asteroid
         binding.root.setOnClickListener{ itemClickHandler(asteroid)}
         binding.executePendingBindings()

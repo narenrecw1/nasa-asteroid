@@ -7,6 +7,11 @@ import androidx.room.RoomDatabase
 import com.udacity.asteroidradar.data.Asteroid
 import com.udacity.asteroidradar.data.PictureOfDay
 
+/**
+ * The Apps Database
+ *
+ * @author Narendra Darla(R)
+ */
 @Database(entities = [Asteroid::class,PictureOfDay::class],version= 1)
 abstract class AsteroidDatabase:RoomDatabase() {
 

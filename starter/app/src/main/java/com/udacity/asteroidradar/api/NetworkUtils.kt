@@ -13,6 +13,8 @@ import kotlin.collections.ArrayList
  *
  * @param jsonResult The JSON response that came from the API.
  * @return A [List] of [Asteroid]s
+ *
+ * @author Narendra Darla(R)
  */
 fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
     val nearEarthObjectsJson = jsonResult.getJSONObject("near_earth_objects")
