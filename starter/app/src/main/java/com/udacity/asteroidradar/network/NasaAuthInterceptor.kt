@@ -12,9 +12,9 @@ class NasaAuthInterceptor:Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val newUrl = chain.request().url
-                       .newBuilder()
-                       .addQueryParameter("api_key", "YR8Qi7VSYFKCysrFPtoVEW0W7FWgLgq3DdWHCk3A")
-                       .build()
+                        .newBuilder()
+                        .addQueryParameter("api_key", "")
+                        .build()
         val newRequest = chain.request()
                        .newBuilder()
                        .url(newUrl)
